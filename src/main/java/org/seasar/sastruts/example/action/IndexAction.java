@@ -19,8 +19,11 @@ import org.seasar.struts.annotation.Execute;
 
 public class IndexAction {
 	
+	public String message;
+	
     @Execute(validator = false)
 	public String index() {
+    	this.message = "Hello SAStruts!";
         return "index.jsp";
 	}
 }
