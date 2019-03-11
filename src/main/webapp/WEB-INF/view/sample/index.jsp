@@ -7,13 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-<html:errors/>
-<s:form method="POST">
-	お名前をどうぞ！
-	<html:text property="name" />
-	年齢をどうぞ！
-	<html:text property="age" />
-	<s:submit property="echo" value="送信"/>
-</s:form>
+<%-- Strutsのタグで表示 --%>
+<bean:write name="message"/>
+
+<%-- JSTLのタグで表示 --%>
+<c:out value="${message}" />
+
+<%-- ELで表示 --%>
+${f:h(message)}
 </body>
 </html>
