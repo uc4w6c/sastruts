@@ -20,7 +20,7 @@ public class EchoAction {
 	}
 
 	/** エコー画面の実行メソッド */
-	@Execute(validator=true, input="input.jsp")
+	@Execute(validate="validate", input="input.jsp")
 	public String echo() {
 		return "echo.jsp";
 	}

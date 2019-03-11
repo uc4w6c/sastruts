@@ -11,8 +11,6 @@
 <s:form method="POST">
 	お名前をどうぞ！
 	<html:text property="name" />
-	年齢をどうぞ！
-	<html:text property="age" />
 	<s:submit property="echo" value="送信"/>
 </s:form>
 </body>
