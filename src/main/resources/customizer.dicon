@@ -61,6 +61,16 @@
         <component class="org.seasar.struts.customizer.ActionCustomizer"/>
       </arg>
     </initMethod>
+    <initMethod name="addCustomizer">
+      <arg>
+        <component class="org.seasar.framework.container.customizer.AspectCustomizer">
+          <property name="interceptorName">"ActionInterceptor"</property>
+          <!-- <property name="pointcut">"org.seasar.sastruts.example.action.*"</property> -->
+          <property name="pointcut">".*"</property>
+          <property name="useLookupAdapter">false</property>
+        </component>
+      </arg>
+    </initMethod>
   </component>
   <component name="serviceCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
     <initMethod name="addCustomizer">
