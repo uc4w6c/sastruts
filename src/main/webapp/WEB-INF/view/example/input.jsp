@@ -9,11 +9,13 @@
 <body>
 <html:errors/>
 <s:form method="POST">
-	お名前をどうぞ！
-	<!-- <html:text property="name" /> -->
-	<input type="text" name="first_name">
-	<input type="text" name="last_name">
-	<s:submit property="echo" value="送信"/>
+<p>
+名前を入力してください<br>
+<html:text property="name" />
+<!-- 名前<input type="text" name="first_name"><br>
+苗字<input type="text" name="last_name"><br> -->
+<s:submit property="echo" value="送信"/><br>
+</p>
 </s:form>
 </body>
 </html>
