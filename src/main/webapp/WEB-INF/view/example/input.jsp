@@ -11,7 +11,7 @@
 <s:form method="POST">
 <p>
 名前を入力してください<br>
-<html:text property="name" />
+名前<input type="text" name="name">
 <!-- 名前<input type="text" name="first_name"><br>
 苗字<input type="text" name="last_name"><br> -->
 <s:submit property="echo" value="送信"/><br>

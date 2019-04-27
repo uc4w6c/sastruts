@@ -8,8 +8,9 @@
 </head>
 <body>
 <p>
-<%/** こんにちは、${f:h(exampleDto.firstname)} ${f:h(exampleDto.lastname)}さん！ */ %>
-こんにちは、${f:h(name)}さん！
+こんにちは
+<%/* こんにちは、${f:h(exampleDto.firstname)} ${f:h(exampleDto.lastname)}さん！ */%>
+<%/* こんにちは、${f:h(name)}さん！*/ %>
 </p>
 </body>
 </html>

@@ -9,6 +9,10 @@ public class ExampleForm {
 	private String firstName;
 	private String lastName;
 
+	public ExampleDto getName() {
+		return exampleDto;
+	}
+
 	public void setName(String name) {
 		System.out.println("setName start");
 		StackTraceElement[] ste = new Throwable().getStackTrace();
@@ -20,22 +24,24 @@ public class ExampleForm {
 		    System.out.println(ste[i].isNativeMethod()); // nativeメソッドか判定する。
 		    System.out.println(ste[i]); // スタックトレースの情報を整形して表示
 		}
+		/*
 		this.name = name;
+		*/
+		
 		String names[] = name.split(" ");
 
-		//exampleDto.setFirstName(names[0]);
-		//exampleDto.setLastName(names[1]);
+		ExampleDto exampleDto = new ExampleDto();
+		exampleDto.setFirstName(names[0]);
+		exampleDto.setLastName(names[1]);
 		//this.firstName = names[0];
 		//this.lastName = names[1];
 	}
+	/*
 	public String getName() {
 		return name;
 	}
-	/**
-	public ExampleDto getName() {
-		return exampleDto;
-	}
 	*/
+
 	/**
 	public String getFirstName() {
 		return firstName;

@@ -16,8 +16,8 @@ import org.seasar.sastruts.example.service.EchoUsersService;
 //@RunWith(Seasar2.class)
 public class EchoActionTest {
 
-	@InjectMocks
-	@Autowired
+	//@InjectMocks
+	//@Autowired
 	private EchoAction echoAction;
 
 	//private MockInterceptor echoUsersServiceMI;

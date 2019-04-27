@@ -1,9 +1,13 @@
 package org.seasar.sastruts.example.action;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.seasar.framework.util.tiger.GenericUtil;
 import org.seasar.sastruts.example.dto.ExampleDto;
 import org.seasar.sastruts.example.form.ExampleForm;
 import org.seasar.struts.annotation.ActionForm;
@@ -21,10 +25,12 @@ public class ExampleAction {
 	/** 入力画面の実行メソッド */
 	@Execute(validator=false)
 	public String index() {
+		/*
 		Method[] methods = ExampleForm.class.getMethods();
 		for (Method method : methods) {
 			System.out.println(method.getName());
 		}
+		*/
 		return "input.jsp";
 	}
 
