@@ -37,6 +37,8 @@ public class ExampleAction {
 	/** エコー画面の実行メソッド */
 	@Execute(input="input.jsp")
 	public String echo() {
+		System.out.println(exampleForm.getFirstName());
+		System.out.println(exampleForm.getLastName());
 		//exampleDto.setFirstName(exampleForm.getFirstName());
 		//exampleDto.setLastName(exampleForm.getLastName());
 		//System.out.println("FirstName:::" + exampleForm.getName().getFirstName());
