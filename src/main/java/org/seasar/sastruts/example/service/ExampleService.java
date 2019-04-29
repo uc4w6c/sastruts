@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ExampleService {
 
 	public void printJson() {
-		String people = "{\"FirstName\":\"太郎\",\"LastName\":\"太郎\"}";
+		String people = "{\"FirstName\":\"太郎\",\"LastName\":\"田中\"}";
 		System.out.println("people:::" + people);
 		ObjectMapper mapper = new ObjectMapper();
 		try {

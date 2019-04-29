@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.seasar.framework.container.annotation.tiger.Binding;
 import org.seasar.framework.util.tiger.GenericUtil;
 import org.seasar.sastruts.example.dto.ExampleDto;
 import org.seasar.sastruts.example.form.ExampleForm;
@@ -27,10 +28,13 @@ public class ExampleAction {
 
 	//public ExampleDto exampleDto;
 
+	@Binding
+	ExampleService exampleService;
+
 	/** 入力画面の実行メソッド */
 	@Execute(validator=false)
 	public String index() {
-		ExampleService exampleService = new ExampleService();
+		//ExampleService exampleService = new ExampleService();
 		exampleService.printJson();
 		/*
 		Method[] methods = ExampleForm.class.getMethods();
@@ -44,8 +48,8 @@ public class ExampleAction {
 	/** エコー画面の実行メソッド */
 	@Execute(input="input.jsp")
 	public String echo() {
-		System.out.println(exampleForm.getFirstName());
-		System.out.println(exampleForm.getLastName());
+		System.out.println(exampleForm.getPeopleForm().getFirstName());
+		System.out.println(exampleForm.getPeopleForm().getLastName());
 		//exampleDto.setFirstName(exampleForm.getFirstName());
 		//exampleDto.setLastName(exampleForm.getLastName());
 		//System.out.println("FirstName:::" + exampleForm.getName().getFirstName());
