@@ -1,7 +1,11 @@
 package org.seasar.sastruts.example.form;
 
+import java.io.IOException;
+
 import org.seasar.sastruts.example.dto.ExampleDto;
 import org.seasar.sastruts.example.form.example.PeopleForm;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ExampleForm {
 
@@ -26,12 +30,13 @@ public class ExampleForm {
 	}
 	*/
 	public void setPeople(String people) {
+		System.out.println("people:::" + people);
 		ObjectMapper mapper = new ObjectMapper();
-		Hoge hoge = mapper.readValue(json, Hoge.class);
-	}
-
-	public PeopleForm getPeople() {
-		return this.peopleForm;
+		try {
+			peopleForm = mapper.readValue(people, PeopleForm.class);
+		} catch (IOException e) {
+			// エラーが出ても一旦何もしない。本来だめ
+		}
 	}
 
 	public PeopleForm getPeopleForm() {

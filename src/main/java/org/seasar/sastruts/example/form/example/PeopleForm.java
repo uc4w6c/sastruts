@@ -1,11 +1,14 @@
 package org.seasar.sastruts.example.form.example;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class PeopleForm {
 
 	private String firstName;
 	private String lastName;
 
-	public PeopleForm(String firstName, String lastName) {
+	public PeopleForm(@JsonProperty("FirstName") String firstName,
+					  @JsonProperty("LastName") String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
