@@ -20,7 +20,7 @@ public class BalanceAction {
 		StringBuilder responseText = new StringBuilder();
 
 		for (Balance balance : balanceList) {
-			responseText.append(balance.toString());
+			responseText.append(balance.toString() + "\r\n");
 		}
 		ResponseUtil.write(responseText.toString(), "text/html", "UTF-8");
 		return null;
