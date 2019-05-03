@@ -22,6 +22,7 @@
 	-->
 	
 	<!-- for H2 -->
+	<!--
 	<component name="xaDataSource"
 		class="org.seasar.extension.dbcp.impl.XADataSourceImpl">
 		<property name="driverClassName">
@@ -36,7 +37,8 @@
 			@org.seasar.framework.util.DriverManagerUtil@deregisterAllDrivers()
 		</destroyMethod>
 	</component>
-	
+	-->
+
 	<!-- for Oracle -->
 	<!--
 	<component name="xaDataSource"
@@ -124,6 +126,18 @@
 		<property name="password">"xxx"</property>
 	</component>
 	-->
+	<component name="xaDataSource"
+		class="org.seasar.extension.dbcp.impl.XADataSourceImpl">
+		<property name="driverClassName">
+			"com.mysql.cj.jdbc.Driver"
+		</property>
+		<property name="URL">
+			"jdbc:mysql://localhost:3306/sastrutsdb?characterEncoding=UTF-8&amp;characterSetResults=UTF-8"
+		</property>
+		<property name="user">"sastrutsuser"</property>
+		<property name="password">"sastrutsuser1%A"</property>
+	</component>
+
 
 	<!-- for SQLServer -->
 	<!--
