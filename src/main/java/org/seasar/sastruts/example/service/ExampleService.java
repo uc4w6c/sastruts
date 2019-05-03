@@ -2,7 +2,7 @@ package org.seasar.sastruts.example.service;
 
 import java.io.IOException;
 
-import org.seasar.sastruts.example.form.example.PeopleForm;
+import org.seasar.sastruts.example.form.example.PersonForm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -13,7 +13,7 @@ public class ExampleService {
 		System.out.println("people:::" + people);
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			PeopleForm peopleForm = mapper.readValue(people, PeopleForm.class);
+			PersonForm peopleForm = mapper.readValue(people, PersonForm.class);
 			System.out.println(peopleForm.getFirstName());
 			System.out.println(peopleForm.getLastName());
 		} catch (IOException e) {

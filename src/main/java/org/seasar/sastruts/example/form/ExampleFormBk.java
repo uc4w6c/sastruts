@@ -3,13 +3,13 @@ package org.seasar.sastruts.example.form;
 import java.io.IOException;
 
 import org.seasar.sastruts.example.dto.ExampleDto;
-import org.seasar.sastruts.example.form.example.PeopleForm;
+import org.seasar.sastruts.example.form.example.PersonForm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ExampleFormBk {
 
-	private PeopleForm peopleForm;
+	private PersonForm personForm;
 	private String name;
 	//private ExampleDto exampleDto;
 	private String firstName;
@@ -33,14 +33,14 @@ public class ExampleFormBk {
 		System.out.println("people:::" + people);
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			peopleForm = mapper.readValue(people, PeopleForm.class);
+			personForm = mapper.readValue(people, PersonForm.class);
 		} catch (IOException e) {
 			// エラーが出ても一旦何もしない。本来だめ
 		}
 	}
 
-	public PeopleForm getPeopleForm() {
-		return this.peopleForm;
+	public PersonForm getPeopleForm() {
+		return this.personForm;
 	}
 
 	public void setName(String name) {

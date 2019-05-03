@@ -12,7 +12,7 @@ import org.seasar.framework.container.annotation.tiger.Binding;
 import org.seasar.framework.util.tiger.GenericUtil;
 import org.seasar.sastruts.example.dto.ExampleDto;
 import org.seasar.sastruts.example.form.ExampleForm;
-import org.seasar.sastruts.example.form.example.PeopleForm;
+import org.seasar.sastruts.example.form.example.PersonForm;
 import org.seasar.sastruts.example.service.ExampleService;
 import org.seasar.struts.annotation.ActionForm;
 import org.seasar.struts.annotation.Execute;
@@ -48,8 +48,8 @@ public class ExampleAction {
 	/** エコー画面の実行メソッド */
 	@Execute(input="input.jsp")
 	public String echo() {
-		System.out.println(exampleForm.getPeopleForm().getFirstName());
-		System.out.println(exampleForm.getPeopleForm().getLastName());
+		System.out.println(exampleForm.getPersonForm().getFirstName());
+		System.out.println(exampleForm.getPersonForm().getLastName());
 		//exampleDto.setFirstName(exampleForm.getFirstName());
 		//exampleDto.setLastName(exampleForm.getLastName());
 		//System.out.println("FirstName:::" + exampleForm.getName().getFirstName());
