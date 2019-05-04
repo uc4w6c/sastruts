@@ -48,4 +48,18 @@ public class BalanceAction {
 		ResponseUtil.write(responseText.toString(), "text/html", "UTF-8");
 		return null;
 	}
+
+	// 失敗する
+	@Execute(validator=false)
+	public String findidandname() {
+		List<Balance> balanceList = balanceService.findByIdAndName();
+		System.out.println("BALANCE_SIZE:" + balanceList.size());
+		StringBuilder responseText = new StringBuilder();
+
+		for (Balance balance : balanceList) {
+			responseText.append(balance.toString() + "\r\n");
+		}
+		ResponseUtil.write(responseText.toString(), "text/html", "UTF-8");
+		return null;
+	}
 }

@@ -18,4 +18,7 @@ public interface BalanceDao {
 	@Sql("select id, name, amount, created_at, updated_at from balance where name = /*name*/'田中'")
 	//@Query("name = /*name*/'田中'")
 	public List<Balance> findByName(String name);
+
+	@Sql("select id, name, amount, created_at, updated_at from balance where (id, name) in /*idAndName*/(1, 2)")
+	public List<Balance> findByIdAndName(List<String> idAndName);
 }
