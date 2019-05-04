@@ -12,8 +12,10 @@ import org.seasar.sastruts.example.entity.Balance;
 public interface BalanceDao {
 	public List<Balance> findAll();
 
-	@Arguments({"name"})
-	//@Sql("select id, name, amount, created_at, updated_at from balance where name = /*name*/'田中' ")
-	@Query("name = /*name*/'田中'")
+	// SQLインジェクションの試し（埋め込み変数）
+	//@Sql("select id, name, amount, created_at, updated_at from balance where name = '/*$name*/'田中''")
+	// SQLインジェクションされずに成功する（バインド変数）
+	@Sql("select id, name, amount, created_at, updated_at from balance where name = /*name*/'田中'")
+	//@Query("name = /*name*/'田中'")
 	public List<Balance> findByName(String name);
 }

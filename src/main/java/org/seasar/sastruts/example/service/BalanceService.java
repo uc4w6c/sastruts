@@ -17,6 +17,11 @@ public class BalanceService {
 	}
 
 	public List<Balance> findByName(String name) {
+		/*
+		StringBuilder sql = new StringBuilder();
+		sql.append("name = '").append(name).append("'");
+		return balanceDao.findByName(sql.toString());
+		*/
 		return balanceDao.findByName(name);
 	}
 }
