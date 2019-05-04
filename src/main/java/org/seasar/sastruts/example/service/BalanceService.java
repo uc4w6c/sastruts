@@ -1,5 +1,6 @@
 package org.seasar.sastruts.example.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.seasar.framework.container.annotation.tiger.Binding;
@@ -13,5 +14,9 @@ public class BalanceService {
 
 	public List<Balance> findAll() {
 		return balanceDao.findAll();
+	}
+
+	public List<Balance> findByName(String name) {
+		return balanceDao.findByName(name);
 	}
 }
