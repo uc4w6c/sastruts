@@ -12,33 +12,34 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "balance")
-public class Balance {
+@Table(name = "transfer")
+public class Transfer {
 	@Id
-	@Column(name = "account_id", nullable = false, unique = true)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
+	public String id;
+
+	@Column(name = "account_id", nullable = false, unique = false)
 	public String accountId;
 
-	@Column(name = "amount", nullable = false, unique = false)
-	public long amount;
-	
 	@Column(name = "name", nullable = false, unique = false)
 	public String name;
 
-	@Column(name = "created_at", nullable = false, unique = false)
-	@Temporal(TemporalType.DATE)
-	public Date createdAt;
+	@Column(name = "transfer_amount", nullable = false, unique = false)
+	public long transferAmount;
 
-	@Column(name = "updated_at", nullable = true, unique = false)
+	@Column(name = "transfer_date", nullable = false, unique = false)
 	@Temporal(TemporalType.DATE)
-	public Date updatedAt;
+	public Date transferDate;
 
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append("id:").append(id);
 		sb.append("account_id:").append(accountId);
 		sb.append("name:").append(name);
-		sb.append("created_at:").append(createdAt);
-		sb.append("updated_at:").append(updatedAt);
+		sb.append("transfer_amount:").append(transferAmount);
+		sb.append("transfer_date:").append(transferDate);
 		return sb.toString();
 	}
 }
