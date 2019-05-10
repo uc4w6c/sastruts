@@ -9,6 +9,7 @@ import org.seasar.sastruts.example.dao.TransferDao;
 import org.seasar.sastruts.example.dto.TransferResultDto;
 import org.seasar.sastruts.example.entity.Balance;
 import org.seasar.sastruts.example.entity.Transfer;
+import org.seasar.sastruts.example.util.BusinessLogicException;
 
 public class TransferService {
 
@@ -25,17 +26,14 @@ public class TransferService {
 
 		Balance payerBalance = balanceDao.findByAccountId(payerAccountId);
 		if (payerBalance == null)
-			// Exceptionをいれること。暫定でreturn をしているだけ
-			return null;
+			throw new BusinessLogicException("残高が取得できません。");
 
 		if (transferAmount > payerBalance.amount)
-			// Exceptionを入れること。暫定return
-			return null;
+			throw new BusinessLogicException("残高が足りません。");
 
 		Balance payeeBalance = balanceDao.findByAccountId(payerAccountId);
 		if (payeeBalance == null)
-			// Exceptionを入れること。暫定return
-			return null;
+			throw new BusinessLogicException("残高が足りません。");
 
 		Transfer peyerTransaction = new Transfer();
 		peyerTransaction.accountId = payerAccountId;
