@@ -26,24 +26,40 @@ public class TransferService {
 
 		Balance payerBalance = balanceDao.findByAccountId(payerAccountId);
 		if (payerBalance == null)
-			throw new BusinessLogicException("残高が取得できません。");
+			throw new BusinessLogicException("残高が取得できません");
 
 		if (transferAmount > payerBalance.amount)
-			throw new BusinessLogicException("残高が足りません。");
+			throw new BusinessLogicException("残高が足りません");
 
 		Balance payeeBalance = balanceDao.findByAccountId(payerAccountId);
 		if (payeeBalance == null)
-			throw new BusinessLogicException("残高が足りません。");
+			throw new BusinessLogicException("振込先口座が存在しません");
+
+		LocalDateTime transferDate = LocalDateTime.now();
 
 		Transfer peyerTransaction = new Transfer();
 		peyerTransaction.accountId = payerAccountId;
-		peyerTransaction.name = "";
+		peyerTransaction.name = payerBalance.name;
 		peyerTransaction.transferAmount = -transferAmount;
-		// peyerTransaction.transferDate = new LocalDate(); // 日付型を確認したい
+		peyerTransaction.transferDate = transferDate;
 
 		Transfer payeeTransaction = new Transfer();
+		payeeTransaction.accountId = payeeAccount;
+		payeeTransaction.name = payeeBalance.name;
+		payeeTransaction.transferAmount = transferAmount;
+		payeeTransaction.transferDate = transferDate;
 
-		return null;
+		transferDao.insertTransfer(peyerTransaction);
+		transferDao.insertTransfer(payeeTransaction);
+		balanceDao.updateAmount(payerAccountId, -transferAmount);
+		balanceDao.updateAmount(payeeAccount, transferAmount);
+
+		Balance updatedPayerBalance = balanceDao.findByAccountId(payerAccountId);
+
+		return new TransferResultDto(payerAccountId, payerBalance.name,
+									 payeeBalance.name, payeeBalance.name,
+									 transferAmount,
+									 updatedPayerBalance.amount);
 	}
 
 

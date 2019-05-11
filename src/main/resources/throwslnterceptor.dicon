@@ -1,0 +1,26 @@
+<!--
+	このファイルは利用されていない。
+	コンポーネントをAOPするには、customizer.diconを修正する必要がある
+-->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.4//EN"
+"http://www.seasar.org/dtd/components24.dtd">
+<components>
+	<component name="traceInterceptor" class="org.seasar.framework.aop.interceptors.TraceInterceptor"/>
+	<component name="throwsInter" class="org.seasar.sastruts.example.interceptor.AppThrowableInterceptor"/>
+
+	<component class="org.seasar.framework.container.autoregister.AspectAutoRegister">
+		<property name="interceptor">traceInterceptor</property>
+		<property name="interceptor">throwsInter</property>
+		<initMethod name="addClassPattern">
+			<arg>"org.seasar.sastruts.example.action, org.seasar.sastruts.example.service"</arg>
+			<arg>".*"</arg>
+		</initMethod>
+	</component>
+	<!--
+	<component name="AopThrowsService" class="sample.aop.AopThrowsServiceImpl">
+		<aspect>traceInterceptor</aspect>
+		<aspect>throwsInter</aspect>
+	</component>
+	-->
+</components>

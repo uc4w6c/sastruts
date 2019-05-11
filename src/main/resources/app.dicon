@@ -7,6 +7,7 @@
   <include path="j2ee.dicon"/>
   <include path="s2jdbc.dicon"/>
   <include path="s2Dao.dicon"/>
+  <component name="appthrowslnterceptor" class="org.seasar.sastruts.example.interceptor.AppThrowableInterceptor"/>
   <component name="actionMessagesThrowsInterceptor" class="org.seasar.struts.interceptor.ActionMessagesThrowsInterceptor"/>
   <!-- <component name="actionInterceptor" class="org.seasar.sastruts.example.aop.ActionInterceptor"/> -->
 </components>

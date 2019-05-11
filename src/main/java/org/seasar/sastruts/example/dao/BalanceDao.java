@@ -1,5 +1,6 @@
 package org.seasar.sastruts.example.dao;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.seasar.dao.annotation.tiger.Arguments;
@@ -19,9 +20,13 @@ public interface BalanceDao {
 	//@Query("name = /*name*/'田中'")
 	public List<Balance> findByName(String name);
 
-	@Sql("select account_id, name, amount, created_at, updated_at from balance where (id, name) in /*idAndName*/(1, 2)")
+	@Sql("select account_id, name, amount, created_at, updated_at from balance where (account_id, name) in /*idAndName*/(1, 2)")
 	public List<Balance> findByIdAndName(List<String> idAndName);
 
-	@Query("account_id = accountId")
+	@Query("account_id = /*accountId*/")
 	public Balance findByAccountId(String accountId);
+
+	@Arguments({"accountId", "transferAmount"})
+	@Sql("update balance set amount = amount + /*transferAmount*/ where account_id = /*accountId*/")
+	public int updateAmount(String accountId, long transferAmount);
 }

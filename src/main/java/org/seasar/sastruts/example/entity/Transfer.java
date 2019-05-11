@@ -1,5 +1,7 @@
 package org.seasar.sastruts.example.entity;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -30,7 +32,7 @@ public class Transfer {
 
 	@Column(name = "transfer_date", nullable = false, unique = false)
 	@Temporal(TemporalType.DATE)
-	public Date transferDate;
+	public LocalDateTime transferDate;
 
 	@Override
 	public String toString() {

@@ -3,6 +3,7 @@
 	"http://www.seasar.org/dtd/components24.dtd">
 <components>
   <include path="default-customizer.dicon"/>
+  <include path="default-customizer.dicon"/>
   
   <!--
     コンポーネントに AOP (インターセプタ) を適用するには AspectCustomizer を使用します．
@@ -45,6 +46,14 @@
 
   <component name="formCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain"/>
   <component name="actionCustomizer" class="org.seasar.framework.container.customizer.CustomizerChain">
+    <initMethod name="addCustomizer">
+      <arg>
+        <component class="org.seasar.framework.container.customizer.AspectCustomizer">
+          <property name="useLookupAdapter">true</property>
+          <property name="interceptorName">"appthrowslnterceptor"</property>
+        </component>
+      </arg>
+    </initMethod>
     <initMethod name="addAspectCustomizer">
       <arg>"actionMessagesThrowsInterceptor"</arg>
     </initMethod>
