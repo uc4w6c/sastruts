@@ -22,7 +22,6 @@ public class TransferResultDto {
 		this.payeeName = payeeName;
 		this.transferAmount = transferAmount;
 		this.amount = amount;
-
 	}
 
 	public String getPayerAccountId() {
@@ -47,5 +46,18 @@ public class TransferResultDto {
 
 	public long getAmount() {
 		return amount;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Payer Account ID:").append(payerAccountId).append(",");
+		sb.append("Payee Account ID:").append(payeeAccount).append(",");
+		sb.append("Payer Name:").append(payerName).append(",");
+		sb.append("Payee Name:").append(payeeName).append(",");
+		sb.append("Transfer Amount:").append(transferAmount).append(",");
+		sb.append("Amount:").append(amount).append(",");
+
+		return sb.toString();
 	}
 }
