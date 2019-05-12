@@ -1,7 +1,7 @@
 package org.seasar.sastruts.example.action;
 
 import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expectLastCall;
 //import static org.easymock.classextension.EasyMock.*;
@@ -28,6 +28,7 @@ import org.seasar.sastruts.example.service.EchoUsersService;
 import org.seasar.sastruts.example.service.TransferService;
 import org.seasar.struts.util.ResponseUtil;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(Seasar2.class)
@@ -61,17 +62,22 @@ public class TransferActionTest {
 
 		expect(transferService.transfer("1", "2", "田中太郎", 1000)).andReturn(expectTransferResult);
 
+		/*
 		String expectJson = "{\"payerAccountId\":\"1\","
-						   + "\"payeeAccountId\":\"1\","
-						   + "\"payerName\":\"田中太郎\","
-						   + "\"payeeName\":\"佐藤花子\","
-						   + "\"transferAmount\":1000,"
-						   + "\"amount\":19000}";
-
-		// ObjectMapper mapper = createMock(ObjectMapper.class);
-		// expect(mapper.writeValueAsString(expectTransferResult)).andReturn(expectJson);
-		// ResponseUtil.write(expectJson);
-		// expectLastCall();
+				   + "\"payeeAccountId\":\"1\","
+				   + "\"payerName\":\"田中太郎\","
+				   + "\"payeeName\":\"佐藤花子\","
+				   + "\"transferAmount\":1000,"
+				   + "\"amount\":19000}";
+		ObjectMapper mapper = createMock(ObjectMapper.class);
+		expect(mapper.writeValueAsString(expectTransferResult)).andReturn(expectJson);
+		replay(mapper);
+		ResponseUtil responseUtil = createMock(ResponseUtil.class);
+		responseUtil.write(expectJson);
+		expectLastCall();
+		verify(mapper);
+		verify(responseUtil);
+		*/
 	}
 
 	@Test
