@@ -20,7 +20,7 @@ public class TransferService {
 	TransferDao transferDao;
 
 	public TransferResultDto transfer(String payerAccountId,
-										String payeeAccount,
+										String payeeAccountId,
 										String payerName,
 										long transferAmount) {
 
@@ -31,7 +31,7 @@ public class TransferService {
 		if (transferAmount > payerBalance.amount)
 			throw new BusinessLogicException("残高が足りません");
 
-		Balance payeeBalance = balanceDao.findByAccountId(payerAccountId);
+		Balance payeeBalance = balanceDao.findByAccountId(payeeAccountId);
 		if (payeeBalance == null)
 			throw new BusinessLogicException("振込先口座が存在しません");
 
@@ -44,7 +44,7 @@ public class TransferService {
 		peyerTransaction.transferDate = transferDate;
 
 		Transfer payeeTransaction = new Transfer();
-		payeeTransaction.accountId = payeeAccount;
+		payeeTransaction.accountId = payeeAccountId;
 		payeeTransaction.name = payeeBalance.name;
 		payeeTransaction.transferAmount = transferAmount;
 		payeeTransaction.transferDate = transferDate;
@@ -52,12 +52,13 @@ public class TransferService {
 		transferDao.insertTransfer(peyerTransaction);
 		transferDao.insertTransfer(payeeTransaction);
 		balanceDao.updateAmount(payerAccountId, -transferAmount);
-		balanceDao.updateAmount(payeeAccount, transferAmount);
+		balanceDao.updateAmount(payeeAccountId, transferAmount);
 
 		Balance updatedPayerBalance = balanceDao.findByAccountId(payerAccountId);
 
-		return new TransferResultDto(payerAccountId, payerBalance.name,
-									 payeeBalance.name, payeeBalance.name,
+		// payeeAccount は payeeAccountIDに変更すること
+		return new TransferResultDto(payerAccountId, payeeAccountId,
+									 payerBalance.name, payeeBalance.name,
 									 transferAmount,
 									 updatedPayerBalance.amount);
 	}

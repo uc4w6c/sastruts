@@ -41,7 +41,7 @@ public class TransferServiceTest {
 		ACCOUNT1_AFTER_BALANCE = new Balance();
 		ACCOUNT1_AFTER_BALANCE.accountId = "1";
 		ACCOUNT1_AFTER_BALANCE.name = "田中太郎";
-		ACCOUNT1_AFTER_BALANCE.amount = 19000;
+		ACCOUNT1_AFTER_BALANCE.amount = 9000;
 
 		ACCOUNT2_BALANCE = new Balance();
 		ACCOUNT2_BALANCE.accountId = "2";
@@ -56,36 +56,46 @@ public class TransferServiceTest {
 	@Test
 	public void 残高が取得できない() {
 		try {
-			TransferResultDto transferResultDto = transferService.transfer("1", "2", "田中太郎", 100);
+			transferService.transfer("1", "2", "田中太郎", 100);
 		} catch (BusinessLogicException expected) {
 			assertThat(expected.getMessage(), is("残高が取得できません"));
 		}
 	}
 
-	public void recordあああ() throws Exception {
-		Balance test2Balance = new Balance();
-		test2Balance.accountId = "2";
-		test2Balance.amount = 50;
-		expect(balanceDao.findByAccountId("2")).andReturn(test2Balance).andReturn(test2Balance);
+	public void record残高が足りない() throws Exception {
+		expect(balanceDao.findByAccountId("1")).andReturn(ACCOUNT1_BEFORE_BALANCE);
 	}
 
 	@Test
-	public void あああ() {
-		TransferResultDto transferResultDto = transferService.transfer("2", "3", "太郎", 100);
-		System.out.println(transferResultDto);
+	public void 残高が足りない() {
+		try {
+			transferService.transfer("1", "2", "田中太郎", 10001);
+		} catch (BusinessLogicException expected) {
+			assertThat(expected.getMessage(), is("残高が足りません"));
+		}
+	}
+
+	public void record振込先口座が存在しない() throws Exception {
+		expect(balanceDao.findByAccountId("1")).andReturn(ACCOUNT1_BEFORE_BALANCE);
+		expect(balanceDao.findByAccountId("2")).andReturn(null);
+	}
+
+	@Test
+	public void 振込先口座が存在しない() {
+		try {
+			transferService.transfer("1", "2", "田中太郎", 9999);
+		} catch (BusinessLogicException expected) {
+			assertThat(expected.getMessage(), is("振込先口座が存在しません"));
+		}
 	}
 
 	public void record正常テスト() throws Exception {
 		expect(balanceDao.findByAccountId("1")).andReturn(ACCOUNT1_BEFORE_BALANCE).andReturn(ACCOUNT1_AFTER_BALANCE);
 		expect(balanceDao.findByAccountId("2")).andReturn(ACCOUNT2_BALANCE);
-		transferDao.insertTransfer(new Transfer());
-		expectLastCall();
-		transferDao.insertTransfer(new Transfer());
-		expectLastCall();
-		balanceDao.updateAmount("1", -1000);
-		expectLastCall();
-		balanceDao.updateAmount("2", 1000);
-		expectLastCall();
+		transferDao.insertTransfer(isA(Transfer.class));
+		expectLastCall().times(2);
+		expect(balanceDao.updateAmount("1", -1000)).andReturn(1);
+		expect(balanceDao.updateAmount("2", 1000)).andReturn(1);
 	}
 
 	@Test
@@ -95,9 +105,7 @@ public class TransferServiceTest {
 										  ACCOUNT1_BEFORE_BALANCE.name, ACCOUNT2_BALANCE.name,
 										  1000, ACCOUNT1_AFTER_BALANCE.amount);
 
-		replay(balanceDao);
 		TransferResultDto transferResultDto = transferService.transfer("1", "2", "田中太郎", 1000);
-		assertThat(transferResultDto, is("残高が取得できません"));
-
+		assertThat(transferResultDto.toString(), is(expectTransferResult.toString()));
 	}
 }

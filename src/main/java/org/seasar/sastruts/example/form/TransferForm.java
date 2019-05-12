@@ -7,7 +7,7 @@ import org.seasar.framework.util.StringUtil;
 public class TransferForm {
 
 	private String payerAccountId;
-	private String payeeAccount;
+	private String payeeAccountId;
 	private String payerName;
 	private long transferAmount;
 
@@ -18,11 +18,11 @@ public class TransferForm {
 		return payerAccountId;
 	}
 
-	public void setPayeeAccountId(String payeeAccount) {
-		this.payeeAccount = payeeAccount;
+	public void setPayeeAccountId(String payeeAccountId) {
+		this.payeeAccountId = payeeAccountId;
 	}
 	public String getPayeeAccountId() {
-		return payeeAccount;
+		return payeeAccountId;
 	}
 
 	public void setPayerName(String payerName) {
@@ -46,7 +46,7 @@ public class TransferForm {
 		if(StringUtil.isEmpty(payerAccountId)) {
 			errors.add("payerAccountId", new ActionMessage("振込口座番号が入力されていません。", false));
 		}
-		if(StringUtil.isEmpty(payeeAccount)) {
+		if(StringUtil.isEmpty(payeeAccountId)) {
 			errors.add("payeeAccount", new ActionMessage("振込先口座番号が入力されていません。", false));
 		}
 		if(StringUtil.isEmpty(payerName)) {
