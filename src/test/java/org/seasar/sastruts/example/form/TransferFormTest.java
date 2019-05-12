@@ -27,7 +27,7 @@ public class TransferFormTest {
 		EXPECT_TRANSFER_FORM.setPayerAccountId("1");
 		EXPECT_TRANSFER_FORM.setPayeeAccountId("2");
 		EXPECT_TRANSFER_FORM.setPayerName("田中太郎");
-		EXPECT_TRANSFER_FORM.setTransferAmount(1000);
+		EXPECT_TRANSFER_FORM.setTransferAmount(1);
 	}
 
 	@Test
