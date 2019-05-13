@@ -9,14 +9,20 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.powermock.api.easymock.PowerMock;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.seasar.framework.aop.interceptors.MockInterceptor;
 import org.seasar.framework.container.annotation.tiger.Binding;
+import org.seasar.framework.mock.servlet.MockHttpServletResponse;
 import org.seasar.framework.unit.Seasar2;
 import org.seasar.framework.unit.annotation.EasyMock;
 import org.seasar.framework.unit.annotation.EasyMockType;
@@ -32,6 +38,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(Seasar2.class)
+@PrepareForTest(TransferAction.class)
 public class TransferActionTest {
 
 	//@Binding
@@ -43,6 +50,9 @@ public class TransferActionTest {
 
 	@EasyMock(value = EasyMockType.DEFAULT, register = true)
 	TransferService transferService;
+
+	@Binding
+	MockHttpServletResponse mockHttpServletResponse;
 
 	//@EasyMock(value = EasyMockType.DEFAULT, register = true)
 	//ObjectMapper mapper;
@@ -61,6 +71,17 @@ public class TransferActionTest {
 		//TransferService transferService = createMock(TransferService.class);
 
 		expect(transferService.transfer("1", "2", "田中太郎", 1000)).andReturn(expectTransferResult);
+
+		String expectJson = "{\"payerAccountId\":\"1\","
+				   + "\"payeeAccountId\":\"1\","
+				   + "\"payerName\":\"田中太郎\","
+				   + "\"payeeName\":\"佐藤花子\","
+				   + "\"transferAmount\":1000,"
+				   + "\"amount\":19000}";
+		
+		PowerMock.mockStaticPartial(ResponseUtil.class, "write");
+		ResponseUtil.write(expectJson);
+		expectLastCall();
 
 		/*
 		String expectJson = "{\"payerAccountId\":\"1\","
@@ -84,8 +105,18 @@ public class TransferActionTest {
 	public void 正常テスト() {
 		transferAction.transferForm = transferForm;
 		transferAction.transferService = transferService;
+
 		assertThat(transferAction.execute(), nullValue());
 	}
+
+	/*
+	@Test
+	public void 正常テスト() {
+		transferAction.transferForm = transferForm;
+		transferAction.transferService = transferService;
+		assertThat(transferAction.execute(), nullValue());
+	}
+	*/
 
 	/*
 	@Test
