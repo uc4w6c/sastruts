@@ -33,12 +33,14 @@ import org.seasar.sastruts.example.form.TransferForm;
 import org.seasar.sastruts.example.service.EchoUsersService;
 import org.seasar.sastruts.example.service.TransferService;
 import org.seasar.struts.util.ResponseUtil;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@RunWith(Seasar2.class)
-@PrepareForTest(TransferAction.class)
+//@RunWith(Seasar2.class)
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(ResponseUtil.class)
 public class TransferActionTest {
 
 	//@Binding
@@ -51,16 +53,7 @@ public class TransferActionTest {
 	@EasyMock(value = EasyMockType.DEFAULT, register = true)
 	TransferService transferService;
 
-	@Binding
-	MockHttpServletResponse mockHttpServletResponse;
-
-	//@EasyMock(value = EasyMockType.DEFAULT, register = true)
-	//ObjectMapper mapper;
-
 	public void record正常テスト() throws Exception {
-		// TransferForm transferForm = new TransferForm();
-		//TransferForm transferForm = createMock(TransferForm.class);
-
 		expect(transferForm.getPayerAccountId()).andReturn("1");
 		expect(transferForm.getPayeeAccountId()).andReturn("2");
 		expect(transferForm.getPayerName()).andReturn("田中太郎");
@@ -68,17 +61,16 @@ public class TransferActionTest {
 
 		TransferResultDto expectTransferResult =
 				new TransferResultDto("1", "2", "田中太郎", "佐藤花子", 1000, 19000);
-		//TransferService transferService = createMock(TransferService.class);
 
 		expect(transferService.transfer("1", "2", "田中太郎", 1000)).andReturn(expectTransferResult);
 
+		// staticメソッドをmock化したい。色々試している途中
 		String expectJson = "{\"payerAccountId\":\"1\","
 				   + "\"payeeAccountId\":\"1\","
 				   + "\"payerName\":\"田中太郎\","
 				   + "\"payeeName\":\"佐藤花子\","
 				   + "\"transferAmount\":1000,"
 				   + "\"amount\":19000}";
-		
 		PowerMock.mockStaticPartial(ResponseUtil.class, "write");
 		ResponseUtil.write(expectJson);
 		expectLastCall();

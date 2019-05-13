@@ -287,9 +287,11 @@
             <version>1.1.2</version>
         </dependency>
         <dependency>
-            <groupId>jboss</groupId>
+        	<!-- <groupId>jboss</groupId> -->
+            <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>
-            <version>3.4.ga</version>
+            <version>3.25.0-GA</version>
+            <!-- <version>3.4.ga</version> -->
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>

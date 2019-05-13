@@ -14,6 +14,7 @@ import org.seasar.sastruts.example.entity.Transfer;
 import org.seasar.sastruts.example.util.BusinessLogicException;
 
 import static org.easymock.EasyMock.*;
+import static org.easymock.EasyMock.isA;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
