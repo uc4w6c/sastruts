@@ -1,10 +1,10 @@
 package org.seasar.sastruts.example.action;
 
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.expectLastCall;
-//import static org.easymock.classextension.EasyMock.*;
+//import static org.easymock.EasyMock.expect;
+//import static org.easymock.EasyMock.replay;
+//import static org.easymock.EasyMock.createMock;
+//import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.classextension.EasyMock.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
@@ -38,30 +38,37 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-//@RunWith(Seasar2.class)
-//@RunWith(PowerMockRunner.class)
-//@PrepareForTest(ResponseUtil.class)
-public class TransferActionTest {
-	//@Binding
-	//TransferAction transferAction;
+/**
+ * PowerMockを試すためのテストクラス EasyMockは手動で設定
+ * @author ysaito
+ *
+ */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(ResponseUtil.class)
+public class TransferActionTest2 {
 	private TransferAction transferAction = new TransferAction();
 
-	@EasyMock(value = EasyMockType.DEFAULT, register = true)
-	TransferForm transferForm;
+	//@EasyMock(value = EasyMockType.DEFAULT, register = true)
+	//TransferForm transferForm;
 
-	@EasyMock(value = EasyMockType.DEFAULT, register = true)
-	TransferService transferService;
+	//@EasyMock(value = EasyMockType.DEFAULT, register = true)
+	//TransferService transferService;
 
-	public void record正常テスト() throws Exception {
+	@Test
+	public void 正常テスト() {
+		TransferForm transferForm = createMock(TransferForm.class);
 		expect(transferForm.getPayerAccountId()).andReturn("1");
 		expect(transferForm.getPayeeAccountId()).andReturn("2");
 		expect(transferForm.getPayerName()).andReturn("田中太郎");
 		expect(transferForm.getTransferAmount()).andReturn((long) 1000);
+		replay(transferForm);
 
 		TransferResultDto expectTransferResult =
 				new TransferResultDto("1", "2", "田中太郎", "佐藤花子", 1000, 19000);
 
+		TransferService transferService = createMock(TransferService.class);
 		expect(transferService.transfer("1", "2", "田中太郎", 1000)).andReturn(expectTransferResult);
+		replay(transferService);
 
 		// staticメソッドをmock化したい。色々試している途中
 		String expectJson = "{\"payerAccountId\":\"1\","
@@ -72,66 +79,11 @@ public class TransferActionTest {
 				   + "\"amount\":19000}";
 		PowerMock.mockStaticPartial(ResponseUtil.class, "write");
 		ResponseUtil.write(expectJson);
-		expectLastCall();
+		PowerMock.expectLastCall();
 
-		/*
-		String expectJson = "{\"payerAccountId\":\"1\","
-				   + "\"payeeAccountId\":\"1\","
-				   + "\"payerName\":\"田中太郎\","
-				   + "\"payeeName\":\"佐藤花子\","
-				   + "\"transferAmount\":1000,"
-				   + "\"amount\":19000}";
-		ObjectMapper mapper = createMock(ObjectMapper.class);
-		expect(mapper.writeValueAsString(expectTransferResult)).andReturn(expectJson);
-		replay(mapper);
-		ResponseUtil responseUtil = createMock(ResponseUtil.class);
-		responseUtil.write(expectJson);
-		expectLastCall();
-		verify(mapper);
-		verify(responseUtil);
-		*/
-	}
-
-	@Test
-	public void 正常テスト() {
 		transferAction.transferForm = transferForm;
 		transferAction.transferService = transferService;
 		System.out.println(transferForm);
 		assertThat(transferAction.execute(), nullValue());
 	}
-
-	/*
-	@Test
-	public void 正常テスト() {
-		transferAction.transferForm = transferForm;
-		transferAction.transferService = transferService;
-		assertThat(transferAction.execute(), nullValue());
-	}
-	*/
-
-	/*
-	@Test
-	public void モックテスト() {
-		TransferForm transferForm = createMock(TransferForm.class);
-		expect(transferForm.getPayerAccountId()).andReturn("1");
-		expect(transferForm.getPayeeAccountId()).andReturn("2");
-		expect(transferForm.getPayerName()).andReturn("田中太郎");
-		expect(transferForm.getTransferAmount()).andReturn((long) 1000);
-		replay(transferForm);
-
-		TransferResultDto expectTransferResult =
-				new TransferResultDto("1", "2", "田中太郎", "佐藤花子", 1000, 19000);
-		TransferService transferService = createMock(TransferService.class);
-
-		expect(transferService.transfer("1", "2", "田中太郎", 1000)).andReturn(expectTransferResult);
-		replay(transferService);
-
-		transferAction.transferForm = transferForm;
-		transferAction.transferService = transferService;
-
-		assertThat(transferAction.execute(), nullValue());
-		verify(transferForm);
-		verify(transferService);
-	}
-	*/
 }
