@@ -38,7 +38,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-//@RunWith(Seasar2.class)
+@RunWith(Seasar2.class)
 //@RunWith(PowerMockRunner.class)
 //@PrepareForTest(ResponseUtil.class)
 public class TransferActionTest {

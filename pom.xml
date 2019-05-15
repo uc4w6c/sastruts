@@ -113,7 +113,7 @@
         <!-- powermockを追加。バージョンとか異なるから動かないかも -->
         <groupId>org.powermock</groupId>
           <artifactId>powermock-module-junit4</artifactId>
-          <version>2.0.2</version>
+          <version>1.6.6</version>
           <scope>test</scope>
         </dependency>
         <dependency>

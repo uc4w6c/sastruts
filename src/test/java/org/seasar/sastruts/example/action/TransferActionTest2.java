@@ -44,7 +44,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ResponseUtil.class})
+@PrepareForTest({ResponseUtil.class, ObjectMapper.class})
 public class TransferActionTest2 {
 	private TransferAction transferAction = new TransferAction();
 
@@ -77,11 +77,32 @@ public class TransferActionTest2 {
 				   + "\"payeeName\":\"佐藤花子\","
 				   + "\"transferAmount\":1000,"
 				   + "\"amount\":19000}";
+
 		// これも失敗する。NosuchMethodError
+		/*
 		ResponseUtil responseUtil = PowerMock.createPartialMock(ResponseUtil.class, "write");
 		responseUtil.write(expectJson);
 		PowerMock.expectLastCall();
 		PowerMock.replay(ResponseUtil.class);
+		*/
+
+		/*
+		ObjectMapper objectMapper = PowerMock.createMock(ObjectMapper.class);
+		try {
+			PowerMock.expectNew(objectMapper.writeValueAsString(expectTransferResult)).andReturn(expectJson);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		PowerMock.replay(objectMapper);
+		*/
+
+		/*
+		PowerMock.mockStatic(ResponseUtil.class);
+		ResponseUtil.write(expectJson);
+		PowerMock.expectLastCall();
+		PowerMock.replay(ResponseUtil.class);
+		*/
+		
 		/*
 		PowerMock.mockStaticPartial(ResponseUtil.class, "write");
 		ResponseUtil.write(expectJson);
