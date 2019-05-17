@@ -13,6 +13,8 @@ import org.seasar.sastruts.example.entity.Balance;
 import org.seasar.sastruts.example.entity.Transfer;
 import org.seasar.sastruts.example.util.BusinessLogicException;
 
+import lombok.EqualsAndHashCode;
+
 import static org.easymock.EasyMock.*;
 import static org.easymock.EasyMock.isA;
 import static org.hamcrest.CoreMatchers.*;
@@ -108,5 +110,55 @@ public class TransferServiceTest {
 
 		TransferResultDto transferResultDto = transferService.transfer("1", "2", "田中太郎", 1000);
 		assertThat(transferResultDto.toString(), is(expectTransferResult.toString()));
+	}
+
+	public void record継承モックを試す() throws Exception {
+		expect(balanceDao.findByAccountId("1")).andReturn(ACCOUNT1_BEFORE_BALANCE).andReturn(ACCOUNT1_AFTER_BALANCE);
+		expect(balanceDao.findByAccountId("2")).andReturn(ACCOUNT2_BALANCE);
+		transferDao.insertTransfer(isA(Transfer.class));
+		expectLastCall().times(2);
+		expect(balanceDao.updateAmount("1", -1000)).andReturn(1);
+		expect(balanceDao.updateAmount("2", 1000)).andReturn(1);
+	}
+
+	@Test
+	public void 継承モックを試す() {
+		TransferResultDtoMock expected = 
+						new TransferResultDtoMock("1", "2",
+												ACCOUNT1_BEFORE_BALANCE.name, ACCOUNT2_BALANCE.name,
+												2000, ACCOUNT1_AFTER_BALANCE.amount);
+
+		TransferResultDto transferResultDto = transferService.transfer("1", "2", "田中太郎", 1000);
+		TransferResultDtoMock actual = new TransferResultDtoMock(transferResultDto);
+		System.out.println(expected.toString());
+		System.out.println(actual.toString());
+		assertThat(actual, is(expected));
+	}
+
+
+	@EqualsAndHashCode(callSuper = true)
+	private class TransferResultDtoMock extends TransferResultDto {
+		public TransferResultDtoMock(String payerAccountId,
+									 String payeeAccountId,
+									 String payerName,
+									 String payeeName,
+									 long transferAmount,
+									 long amount) {
+
+			super(payerAccountId, payeeAccountId, payerName,
+					payeeName, transferAmount, amount);
+
+		}
+
+		public TransferResultDtoMock(TransferResultDto transferResultDto) {
+			super(transferResultDto.getPayerAccountId(),
+				  transferResultDto.getPayeeAccountId(),
+				  transferResultDto.getPayerName(),
+				  transferResultDto.getPayeeName(),
+				  transferResultDto.getTransferAmount(),
+				  transferResultDto.getAmount());
+		}
+				
+
 	}
 }

@@ -63,6 +63,7 @@ public class TransferActionTest {
 
 		expect(transferService.transfer("1", "2", "田中太郎", 1000)).andReturn(expectTransferResult);
 
+		/*
 		// staticメソッドをmock化したい。色々試している途中
 		String expectJson = "{\"payerAccountId\":\"1\","
 				   + "\"payeeAccountId\":\"1\","
@@ -73,6 +74,7 @@ public class TransferActionTest {
 		PowerMock.mockStaticPartial(ResponseUtil.class, "write");
 		ResponseUtil.write(expectJson);
 		expectLastCall();
+		*/
 
 		/*
 		String expectJson = "{\"payerAccountId\":\"1\","
