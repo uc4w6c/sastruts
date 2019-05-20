@@ -123,6 +123,7 @@ public class TransferServiceTest {
 
 	@Test
 	public void 継承モックを試す() {
+		// setup
 		TransferResultDtoMock expected = 
 						new TransferResultDtoMock("1", "2",
 												ACCOUNT1_BEFORE_BALANCE.name, ACCOUNT2_BALANCE.name,

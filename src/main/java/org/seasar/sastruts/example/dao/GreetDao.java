@@ -7,4 +7,6 @@ import org.seasar.sastruts.example.entity.Balance;
 
 public interface GreetDao {
 	public String getGreet();
+	public String findGreet(int type);
+	public void insertGreet(String greet);
 }

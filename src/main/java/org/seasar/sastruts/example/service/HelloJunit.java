@@ -13,7 +13,18 @@ public class HelloJunit {
 	}
 
 	public String sayGreeting() {
-		return greetDao.getGreet();
+		//greetDao.getGreet();
+		String greet = greetDao.findGreet(1);
+		if (greet.contentEquals("Hello")) {
+			return "パスタ";
+		} else {
+			return "ラーメン";
+		}
+	}
+
+	public String addGreet() {
+		greetDao.insertGreet("Good Night");
+		return "OK";
 	}
 
 	public String sayHello() {
